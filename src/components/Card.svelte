@@ -60,16 +60,44 @@
     width: 235px;
     height: 345px;
 
-    transition: transform 1s;
     transform-style: preserve-3d;
     transform-origin: center;
     box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
-    transform: rotateY(0deg);
+    transform: rotateY(180deg);
+    background-color: var(--light);
   }
 
-  .card.card--is-flipped {
-    transform: rotateY(180deg);
+  .card.card--flipped {
+    animation: cardFlip 0.275s forwards linear;
+  }
+
+  .card.card--unflipped {
+    animation: cardUnFlip 0.275s forwards linear;
+  }
+
+  @keyframes cardFlip {
+    0% {
+      transform: rotateZ(0deg) rotateY(180deg);
+    }
+    50% {
+      transform: rotateZ(-10deg) rotateY(90deg);
+    }
+    100% {
+      transform: rotateZ(0deg) rotateY(0deg);
+    }
+  }
+
+  @keyframes cardUnFlip {
+    0% {
+      transform: rotateZ(0deg) rotateY(0deg);
+    }
+    50% {
+      transform: rotateZ(-10deg) rotateY(90deg);
+    }
+    100% {
+      transform: rotateZ(0deg) rotateY(180deg);
+    }
   }
 
   .card__back,
@@ -77,34 +105,39 @@
     position: absolute;
     top: 0;
     left: 0;
+    backface-visibility: hidden;
 
     width: 100%;
     height: 100%;
-    backface-visibility: hidden;
     border-radius: 10px;
-    padding: 25px;
   }
 
   .card__front {
+    z-index: 2;
+
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 5fr 1fr 3fr;
     grid-row-gap: 10px;
     justify-items: center;
     align-items: center;
+    padding: 25px;
 
     background-color: var(--light);
+    transform: rotateY(0deg);
   }
 
   .card__back {
+    z-index: 4;
+
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 185px 1fr;
     align-items: center;
     justify-content: center;
+    padding: 25px;
 
     background-color: var(--purple);
-
     transform: rotateY(180deg);
   }
 
@@ -146,7 +179,7 @@
 </style>
 
 <div class="card-scene">
-  <div class="card" class:card--is-flipped={!type}>
+  <div class="card" class:card--flipped={type} class:card--unflipped={!type}>
     <div class="card__front">
       {#if type}
         <img src={cardTypeIconUrl} alt="" class="card__type-img" />
