@@ -1,5 +1,29 @@
+<script context="module">
+  import Clipboard from "clipboard";
+</script>
+
 <script>
-  export let type;
+  import { onMount } from "svelte";
+
+  export let type = "button";
+  export let clipboard = "";
+
+  let button;
+
+  onMount(() => {
+    if (clipboard) {
+      const clip = new Clipboard(button);
+      const originalButtonText = button.innerText;
+
+      clip.on("success", function(e) {
+        button.innerText = "Copied!";
+
+        setTimeout(() => {
+          button.innerText = originalButtonText;
+        }, 1000);
+      });
+    }
+  });
 </script>
 
 <style>
@@ -18,6 +42,11 @@
   }
 </style>
 
-<button class="button" on:click {type}>
+<button
+  class="button"
+  bind:this={button}
+  data-clipboard-text={clipboard}
+  on:click
+  {type}>
   <slot />
 </button>

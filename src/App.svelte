@@ -25,16 +25,23 @@
     box-sizing: border-box;
   }
 
+  :global(html) {
+    overflow-x: hidden;
+  }
+
   :global(body) {
+    overflow-x: hidden;
+
     font-size: var(--base-font-size);
     font-family: var(--base-font-family);
     font-weight: var(--base-font-weight);
     color: var(--dark);
+
     background-color: var(--bg);
   }
 
   .root {
-    height: 100vh;
+    min-height: 100vh;
     padding: 30px;
   }
 </style>

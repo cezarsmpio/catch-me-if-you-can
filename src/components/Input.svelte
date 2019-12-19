@@ -1,9 +1,9 @@
 <script>
   export let type = "text";
-  export let name;
-  export let required;
-  export let placeholder;
-  export let autofocus;
+  export let name = "";
+  export let required = false;
+  export let placeholder = "";
+  export let autofocus = false;
   export let value = "";
 
   function handleInput(evt) {

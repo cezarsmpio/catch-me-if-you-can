@@ -3,12 +3,13 @@
   import { onMount } from "svelte";
   import Input from "../components/Input.svelte";
   import Button from "../components/Button.svelte";
+  import { getOriginalRoomName } from "../utils/room";
 
   export let router = {};
   const roomId = router.params.roomId;
-  const roomName = router.query.name;
+  const roomName = getOriginalRoomName(roomId);
 
-  let nickname = window.localStorage.getItem("nickname");
+  let playerName = window.localStorage.getItem("nickname");
 
   onMount(() => {
     if (!roomName) {
@@ -19,13 +20,9 @@
   function handleOnSubmit(evt) {
     evt.preventDefault();
 
-    window.localStorage.setItem("nickname", nickname);
+    window.localStorage.setItem("nickname", playerName);
 
-    navigateTo(`/room/${roomId}`, {
-      queryParams: {
-        name: roomName
-      }
-    });
+    navigateTo(`/room/${roomId}`);
   }
 </script>
 
@@ -66,8 +63,6 @@
   }
 </style>
 
-{@debug nickname}
-
 <main class="join-room">
   <div>
     <h3 class="join-room__welcome">Welcome to the room</h3>
@@ -79,7 +74,7 @@
       <div class="join-room__form-group">
         <Input
           name="nickname"
-          bind:value={nickname}
+          bind:value={playerName}
           placeholder="Your nickname"
           autofocus />
       </div>
