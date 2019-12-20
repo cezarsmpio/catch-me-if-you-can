@@ -65,7 +65,6 @@
     box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     transform: rotateY(180deg);
-    background-color: var(--light);
   }
 
   .card.card--flipped {
